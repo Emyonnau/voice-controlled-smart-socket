@@ -220,27 +220,26 @@ void extract_and_infer_mfccs()
 	float mfccOut[MFCC_OUT_SIZE]; // result after typecast
 
 	// Feature extraction
-	printf("Feature extraction started\r\n");
-	int feature_counter = 0;
-	  mfcc->mfcc_compute(mfccInputFrame, mfccOutTmp);
-	for (int i = 0; i < 16000-MFCC_STEP_SIZE; i+=MFCC_STEP_SIZE,
-	feature_counter++) {
-	  for (int j = 0; j < MFCC_IN_SIZE; j++) {
-	    if (i+j >= 16000)
-	      mfccInputFrame[j] = 0;
-	    else {
-	      mfccInputFrame[j] = (float) array[i+j];
-//	      printf("%f, ", mfccInputFrame[j]);
-	    }
-	  }
+printf("Feature extraction started\r\n");
 
-	  for (int k = 0; k < MFCC_OUT_SIZE; k++)
-	  {
-	    kws->mMFCC[feature_counter][k] = (ai_float)mfccOutTmp[k];
-	  }
+int feature_counter = 0;
+for (int i = 0; i <= ARRAY_SIZE - MFCC_IN_SIZE; i += MFCC_STEP_SIZE, feature_counter++) {
 
-	}
+    // 1) Fill MFCC input frame
+    for (int j = 0; j < MFCC_IN_SIZE; j++) {
+        mfccInputFrame[j] = (float)array[i + j];
+    }
 
+    // 2) Compute MFCC for this frame  ✅ moved inside the loop
+    mfcc->mfcc_compute(mfccInputFrame, mfccOutTmp);
+
+    // 3) Store into KWS input tensor
+    for (int k = 0; k < MFCC_OUT_SIZE; k++) {
+        kws->mMFCC[feature_counter][k] = (ai_float)mfccOutTmp[k];
+    }
+}
+
+printf("Feature extraction ended\r\n");
 //	printf("Feature extraction ended\r\n");
 //	for (int i = 0; i < MFCC_OUT_SIZE; ++i)
 //	{
@@ -604,6 +603,7 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
 
 
 

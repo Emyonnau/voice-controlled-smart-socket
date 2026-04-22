@@ -1,7 +1,8 @@
-# Voice-Controlled Smart Socket on STM32
+## Voice-Controlled Smart Socket on STM32
 
 A modular STM32 embedded project for real-time voice-controlled smart socket switching.  
 The firmware captures microphone input via I2S + DMA, performs voice activity detection with pre-recording, extracts MFCC features, runs keyword spotting inference, and toggles a wireless smart socket.
+
 ---
 ## Features
 

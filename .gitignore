@@ -1,0 +1,36 @@
+# Build folders
+build/
+Debug/
+Release/
+cmake-build-*/
+out/
+
+# VS Code
+.vscode/
+
+# STM32CubeIDE / Eclipse
+.settings/
+.project
+.cproject
+.mxproject
+
+# CubeMX generated temp / backup
+*.launch
+
+# Object / binary files
+*.o
+*.obj
+*.elf
+*.axf
+*.map
+*.bin
+*.hex
+*.d
+*.su
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
